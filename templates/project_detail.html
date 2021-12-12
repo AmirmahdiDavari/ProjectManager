@@ -1,0 +1,35 @@
+    <html>
+<head>
+  <title>
+    Django QuerySet Tutorial
+  </title>
+
+  <style>
+    th { text-align:left; color:blue; }
+    table, th, td { border: 1px solid;}
+    h1{ color:green;}
+    #name{ width:350px;}
+  </style>
+</head>
+<body>
+<center><h1 style="margin-left:20px;">Searching Product</h1>
+<form method="get" action="">
+  {% csrf_token %}
+  Search Product: <input name="src" type="text" placeholder="Search..." value="">
+</form>
+</center>
+<center>
+  <table>
+   <tr>
+    <th>ID</th><th id="name">Name</th><th>Brand</th><th>Price</th>
+    </tr>
+    {% for product in object_list %}
+    <tr>
+       <td>{{product.id}} </td> <td>{{product.name}}</td> <td>{{product.brand}}</td><td
+style="text-align:right">${{product.price}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</center>
+</body>
+</html>

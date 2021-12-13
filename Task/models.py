@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+from ProjectManager import settings
 from Step.models import Step
 from django.utils import timezone
 # class ExpertUser(models.Model):
@@ -19,7 +21,7 @@ from django.utils import timezone
 
 
 class Task(models.Model):
-    STATUS_CHOICES = {
+    STATUS_TASK = {
         (0, 'deActive'),
         (1, 'Active'),
         (2, 'Faile'),
@@ -40,14 +42,14 @@ class Task(models.Model):
     }
     title = models.CharField(max_length=100,null=True)
     description = models.TextField(null=True)
-    createDate = models.DateTimeField(auto_now_add=True,null=True)
-    startDate = models.DateField(blank=True,null=True)
+    createDate = models.DateTimeField(auto_now_add=True)
+    # startDate = models.DateField(blank=True,null=True)
     endDate = models.DateField(blank=True,null=True)
-    status = models.IntegerField(choices=sorted(STATUS_CHOICES),default=0,blank=True, null=True)
-    Estimated_end=models.DateField(blank=True,null=True)
+    status = models.IntegerField(choices=sorted(STATUS_TASK),default=0,blank=True, null=True,editable=False)
+    Estimated_end=models.DateField(blank=True,null=True,editable=False)
     StepID = models.ForeignKey(Step,on_delete=models.CASCADE,blank=True, null=True)
     ratePerformance = models.IntegerField(choices=sorted(SATTUS_RATE),null= True ,editable=False)
-    Expert = models.ForeignKey(User,on_delete=models.CASCADE ,null=True)
+    Expert = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE ,null=True)
     periority=models.IntegerField(choices=sorted(SATTUS_Periority),default=3)
 
     def __str__(self):

@@ -16,7 +16,7 @@ class Step(models.Model):
         (3, 'low')
     }
     Name=models.CharField(max_length=200)
-    priority=models.IntegerField(choices=sorted(SATTUS_Periority),default=2,null=False)
+    priority=models.IntegerField()
     ProjectId=models.ForeignKey(Project,on_delete=models.CASCADE,null=True)
     ParentId=models.OneToOneField(parent,on_delete=models.CASCADE,null=True)
 

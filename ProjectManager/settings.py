@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['192.168.12.219','127.0.0.1']
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,14 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # "AddUser",
+    "AddUser",
     'rest_framework_swagger',
     "Project.apps.ProjectConfig",
     "Task.apps.TaskConfig",
     "Step.apps.StepConfig",
     "Financial.apps.FinancialConfig",
+    # "AddUser.apps.AddUserConfig",
 
-]
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,3 +151,5 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = "AddUser.MyUser"

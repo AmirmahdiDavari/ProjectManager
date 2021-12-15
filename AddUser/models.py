@@ -8,11 +8,14 @@ class MyUser(AbstractUser):
             (3,'Financial'),
             (4,'Admin'),
         }
-    Skill=models.IntegerField(choices=sorted(STATUSE),default=1)
 
+    Role=models.IntegerField(choices=sorted(STATUSE),default=1)
+    def test_validator(self):
+        if self.Role=='1':
 
+            return self
 
-
+    print(test_validator)
 
 
 

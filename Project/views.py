@@ -14,3 +14,9 @@ class ProjectDetile(RetrieveAPIView ):
     #     return get_object_or_404(Project,pk=self.kwargs.get("pk"))
 
 
+from jalali_date import datetime2jalali, date2jalali
+
+from jalali_date import datetime2jalali, date2jalali
+
+def my_view(request):
+	jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')

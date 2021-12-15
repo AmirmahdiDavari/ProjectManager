@@ -1,23 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from ProjectManager.settings import AUTH_USER_MODEL
+from  extentions.Utils import jalali_converter
 from ProjectManager import settings
 from Step.models import Step
-from django.utils import timezone
-# class ExpertUser(models.Model):
-#     STEPID_CHOICES={
-#         (1,'SEO'),
-#         (2,'FRONT_END'),
-#         (3,'BACK_END'),
-#         (4,'SRVER'),
-#     }
-#     ferst_neme=models.TextField()
-#     last_name=models.TextField()
-#     emailaddres=models.EmailField()
-#     Role=models.IntegerField(choices=sorted(STEPID_CHOICES),null=False)
-#
-#     def __str__(self):
-#         return self.STEPID_CHOICES
 
 
 class Task(models.Model):
@@ -42,15 +29,18 @@ class Task(models.Model):
     }
     title = models.CharField(max_length=100,null=True)
     description = models.TextField(null=True)
-    createDate = models.DateTimeField(auto_now_add=True)
+    createDate = models.DateTimeField(auto_now_add=True,editable=False)
     # startDate = models.DateField(blank=True,null=True)
     endDate = models.DateField(blank=True,null=True)
     status = models.IntegerField(choices=sorted(STATUS_TASK),default=0,blank=True, null=True,editable=False)
     Estimated_end=models.DateField(blank=True,null=True,editable=False)
     StepID = models.ForeignKey(Step,on_delete=models.CASCADE,blank=True, null=True)
     ratePerformance = models.IntegerField(choices=sorted(SATTUS_RATE),null= True ,editable=False)
-    Expert = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE ,null=True)
+    Expert = models.ForeignKey(AUTH_USER_MODEL,on_delete=models.CASCADE ,null=True)
     periority=models.IntegerField(choices=sorted(SATTUS_Periority),default=3)
 
     def __str__(self):
         return self.title
+
+
+

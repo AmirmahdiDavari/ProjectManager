@@ -4,9 +4,6 @@ from django.urls import path
 from .views import ProjectDetile
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
 urlpatterns = [
-    path('<int:pk>',ProjectDetile.as_view()),
-    path('<int:pk>',ProjectDetile.as_view()),
+    path('<int:pk>', ProjectDetile.as_view()),
 ]
-

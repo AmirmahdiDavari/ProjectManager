@@ -1,20 +1,8 @@
 from django.contrib import admin
-from django.forms import JSONField
-from jalali_date import datetime2jalali
-from jalali_date.admin import ModelAdminJalaliMixin
-from extentions.Utils import jalali_converter
-from django.contrib import admin
 from jalali_date import datetime2jalali, date2jalali
 from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
 from .models import Project
-class ProjectAdmin(admin.ModelAdmin,ModelAdminJalaliMixin):
-    list_display = ('title','image_tag','description','jstartDate',)
-    list_filter =['title','Experts']
-    search_fields =('title','description')
-    ordering =[ 'startDate','status']
-
-
-
+from AddUser.models import MyUser
 
 
 class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
@@ -29,17 +17,28 @@ class JSONEditor:
     pass
 
 
-class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
-    # show jalali date in list display
-    # list_display = ['some_fields', 'get_created_jalali']
-    #
-    # inlines = (MyInlines1, MyInlines2,)
-    # raw_id_fields = ('some_fields',)
-    # readonly_fields = ('some_fields', 'date_field',)
-    # # you can override formfield, for example:
-    # formfield_overrides = {
-    #     JSONField: {'widget': JSONEditor},
-    # }
+class end_date(Project):
+    def enddate(self):
+        if Project.status == 1:
+            Project.endDate = True
+        elif Project.status == 2:
+            Project.endDate = True
+        else:
+            Project.endDate = False
+
+    print(enddate)
+
+
+class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
+    list_display = ('title', 'image_tag', 'description', 'jstartDate', 'status')
+    list_filter = ['title', 'Experts']
+    search_fields = ('title', 'description')
+    ordering = ['startDate', 'status']
+    actions_on_top = False
+    actions_selection_counter = True
+    empty_value_display = 'وارد نشده ا ست '
+
+    # radio_fields = {"group": admin.VERTICAL}
 
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
@@ -47,7 +46,27 @@ class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     get_created_jalali.short_description = 'تاریخ ایجاد'
     get_created_jalali.admin_order_field = 'created'
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "myuser":
+            kwargs["queryset"] = MyUser.objects.filter(Role=1)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    class Meta:
+        def enddate(self):
+            if Project.status == 1:
+                Project.endDate = True
+            elif Project.status == 2:
+                Project.endDate = True
+            else:
+                Project.endDate = False
+
+        print(enddate)
 
 
+admin.site.register(Project, projrctAdmin)
 
-admin.site.register(Project,FirstModelAdmin)
+# class BucketAdmin(admin.ModelAdmin):
+#     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+#         if db_field.name == "things":
+#              kwargs["queryset"] = Things.objects.filter(...)
+#         return super(BucketAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)

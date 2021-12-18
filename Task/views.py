@@ -1,11 +1,11 @@
 import json
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView
-from rest_framework.response import Response
+from jalali_date import datetime2jalali, date2jalali
 from .models import Task
-from .serializers import UpdateStatusTasktSerializer
+from .serializers import UpdateStatusTasktSerializer, DashbordTasktSerializer, AllTaskSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 
 
@@ -18,37 +18,21 @@ class updateTask(RetrieveUpdateAPIView):
 
 
 class Dashbord(ListAPIView):
-    serializer_class = UpdateStatusTasktSerializer
+    serializer_class = AllTaskSerializer
 
     def get_queryset(self):
         queryset = Task.objects.filter(Estimated_end__isnull=True)
         return queryset
-
-    def get_queryset(self):
-        queryset = Task.objects.filter(Estimated_end__isnull=True)
-        response = {
-            "mesage": 'mohtava baz ghardande shod'
-        }
-        return queryset
-
-# class TaskList(ListAPIView):
-#     # Define model
-#     model = Task
-#     # Define template
-#     serializer_class = ViewTasktSerializer
-#
-#     def get_queryset(self):
-#         # Set the default query set
-#         # # Check the form value is submitted or not
-#         # if self.request.GET.keys():
-#         #     # Check the search keyword
-#         #     if self.request.GET.get('src') != '':
-#         #         keyword = self.request.GET.get('src')
-#         #         # Set the query set based on search keyword
-#         queryset = Task.objects.filter(endDate__isnull=True)
-#         return queryset
+    # elif int == 2:
+    #     def get_queryset(self):
+    #         queryset = Task.objects.filter(status=1)
+    #
+    #         return queryset
 
 
-# class UpdateTask (ListAPIView):
-#     queryset = Task.objects.all()
-#     serializer_class = UpdateTasktSerializer
+class TaskProgect(ListAPIView):
+    queryset =Task.objects.filter(StepID__ProjectId=int)
+    serializer_class = AllTaskSerializer
+
+def my_view(request):
+    jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')

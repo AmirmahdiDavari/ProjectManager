@@ -3,13 +3,21 @@ from .models import Task
 from django.contrib.auth import get_user_model
 
 
-class ExpertSerializer (serializers.ModelSerializer):
-    enddate=serializers.HiddenField
+class AllTaskSerializer(serializers.ModelSerializer):
+    enddate = serializers.HiddenField
+
     class Meta:
         model = get_user_model()
-        fields="__all__"
+        fields = "__all__"
 
-class UpdateStatusTasktSerializer (serializers.ModelSerializer):
+
+class UpdateStatusTasktSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ["Estimated_end", 'status']
+
+
+class DashbordTasktSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ["Estimated_end", 'status']

@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import financial
+from .models import MyUser
 
 
-class listfinancialSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = financial
+        model = MyUser
         fields = "__all__"
         # exclude=('type','money')
         # depth=1

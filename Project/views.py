@@ -1,16 +1,63 @@
 from django.shortcuts import render, get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .models import Project
-from .serializers import updateProjecttSerializer
-from rest_framework.generics import UpdateAPIView
-from rest_framework.generics import RetrieveAPIView
-from django.views.generic import DetailView
+from rest_framework import status
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate
+from .serializers import ListProjecttSerializer
+from rest_framework.generics import RetrieveAPIView,ListAPIView
 from jalali_date import datetime2jalali, date2jalali
 
 
-class ProjectDetile(RetrieveAPIView):
-    queryset = Project.objects.all()
-    serializer_class = updateProjecttSerializer
+
+
+
+
+
+class ProjectList(ListAPIView,LoginRequiredMixin):
+    permission_classes = (IsAuthenticated, )
+
+    serializer_class = ListProjecttSerializer
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Project.objects.all()
+        else:
+            return Project.objects.filter(Experts=self.request.user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def my_view(request):
     jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
+
+
+# class ProjectVEWO(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     def get(self, rquest, pk):
+#         query = Project.objects.get(pk=pk)
+#         serializer = updateProjecttSerializer(query)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+#
+#     def put(self, request, pk):
+#         query = Project.objects.get(pk=pk)
+#         serializer = updateProjecttSerializer(query, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)

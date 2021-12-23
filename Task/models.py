@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from jalali_date import datetime2jalali
+
+from Project.models import Project
 from ProjectManager.settings import AUTH_USER_MODEL
 from Step.models import Step
 

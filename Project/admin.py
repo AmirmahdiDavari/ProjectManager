@@ -26,7 +26,6 @@ class end_date(Project):
         else:
             Project.endDate = False
 
-    print(enddate)
 
 
 class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
@@ -39,6 +38,11 @@ class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     empty_value_display = 'وارد نشده ا ست '
 
     # radio_fields = {"group": admin.VERTICAL}
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "Expert":
+            kwargs["queryset"] = MyUser.objects.filter(Expert__in=1)
+        return super(projrctAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
 
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
@@ -59,8 +63,6 @@ class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
                 Project.endDate = True
             else:
                 Project.endDate = False
-
-        print(enddate)
 
 
 admin.site.register(Project, projrctAdmin)

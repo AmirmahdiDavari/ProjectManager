@@ -2,13 +2,14 @@ from .models import Task
 from django.contrib import admin
 from jalali_date import datetime2jalali, date2jalali
 from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
+from AddUser.models import MyUser
 
-
-class ProjectAdmin(admin.ModelAdmin, ModelAdminJalaliMixin):
+class TaskAdmin(admin.ModelAdmin, ModelAdminJalaliMixin):
     list_display = ('title', 'image_tag', 'description', 'jstartDate',)
     list_filter = ['title', 'Experts']
     search_fields = ('title', 'description')
     ordering = ['startDate', 'status']
+
 
 
 class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):

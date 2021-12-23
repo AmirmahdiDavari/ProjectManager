@@ -17,19 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-import Task.urls
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
-# from django.conf.urls import url
-# from rest_framework_swagger.views import get_swagger_view
-#
-# schema_view = get_swagger_view(title='Pastebin API')
-#
-# urlpatterns = [
-#     url(r'^$', schema_view)
-# ]
 urlpatterns = [
+                  path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+                  path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
                   path('admin/', admin.site.urls),
                   path('Task/', include('Task.urls')),
+                  path('profile/', include('AddUser.urls')),
                   path('api/', include('Task.urls')),
                   path('Project/', include('Project.urls')),
                   path('financial/', include('Financial.urls')),

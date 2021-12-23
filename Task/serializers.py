@@ -10,6 +10,11 @@ class AllTaskSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = "__all__"
 
+class allTasktSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = "__all__"
+
 
 class UpdateStatusTasktSerializer(serializers.ModelSerializer):
     class Meta:

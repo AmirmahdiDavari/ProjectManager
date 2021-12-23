@@ -27,8 +27,7 @@ class end_date(Project):
             Project.endDate = False
 
 
-
-class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
+class ProjrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ('title', 'image_tag', 'description', 'jstartDate', 'status')
     list_filter = ['title', 'Experts']
     search_fields = ('title', 'description')
@@ -41,8 +40,7 @@ class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "Expert":
             kwargs["queryset"] = MyUser.objects.filter(Expert__in=1)
-        return super(projrctAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
-
+        return super(ProjrctAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
@@ -65,7 +63,7 @@ class projrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
                 Project.endDate = False
 
 
-admin.site.register(Project, projrctAdmin)
+admin.site.register(Project, ProjrctAdmin)
 
 # class BucketAdmin(admin.ModelAdmin):
 #     def formfield_for_foreignkey(self, db_field, request, **kwargs):

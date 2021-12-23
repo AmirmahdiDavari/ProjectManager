@@ -1,9 +1,9 @@
 import json
 from django.utils import timezone
 from datetime import date
-
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import Task
-from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from datetime import datetime
@@ -11,8 +11,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView
 from jalali_date import datetime2jalali, date2jalali
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Task
 from .serializers import UpdateStatusTasktSerializer, allTasktSerializer, AllTaskSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
@@ -49,15 +48,15 @@ class TaskUpdate(RetrieveUpdateAPIView, LoginRequiredMixin):
             return Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True, status=1 | 2 | 3 | 0)
 
 
-class Dashbord2(ListAPIView):
-    serializer_class = allTasktSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        queryset = Task.objects.filter(Expert=self.request.user, status=1)
-        return queryset
-
-
+# class Dashbord2(ListAPIView):
+#     serializer_class = allTasktSerializer
+#     permission_classes = (IsAuthenticated,)
+#
+#     def get_queryset(self):
+#         queryset = Task.objects.filter(Expert=self.request.user, status=1)
+#         return queryset
+#
+#
 class Dashbord3(ListAPIView):
     serializer_class = AllTaskSerializer
     permission_classes = (IsAuthenticated,)
@@ -74,19 +73,48 @@ class Dashbord3(ListAPIView):
                 queryset = Task.objects.filter(Expert=self.request.user)
                 return queryset
             else:
-                return Response("aaaaaaaaaaaaaaaaaaaa")
+                return Response()
 
+#
+# class Dashbord1(ListAPIView):
+#     serializer_class = AllTaskSerializer
+#     permission_classes = (IsAuthenticated,)
+#     def get_queryset(self):
+#
+#         queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True)
+#
+#         return HttpResponse(queryset)
 
-class Dashbord1(ListAPIView):
-    serializer_class = AllTaskSerializer
-    permission_classes = (IsAuthenticated,)
-    def get_queryset(self):
-
-        queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True)
-
-        return HttpResponse(queryset)
 
 
 def my_view(request):
     jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
+
+
+class DashbordType(ListAPIView):
+    serializer_class = allTasktSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        type = self.request.GET.get('type')
+        type = int(type)
+        datetime_object = datetime.now()
+        if type == 1:
+            queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True)
+
+            return queryset
+        elif type == 2:
+            queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__lte= datetime_object)
+            if (queryset):
+                queryset = Task.objects.filter(Expert=self.request.user,)
+                # print(datetime_object)
+                # print(Task.Estimated_end)
+                return queryset
+            else:
+                return Response({"mesage":"TASKI VOVJOD NADARAD"})
+        elif type == 3:
+            queryset = Task.objects.filter(Expert=self.request.user, status=1)
+            return queryset
+        else:
+            return Response({'mesege':"TYPE RA BE DOROSTI VARED KONID"})
 

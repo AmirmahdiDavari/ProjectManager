@@ -1,15 +1,7 @@
 from .models import Task
 from django.contrib import admin
-from jalali_date import datetime2jalali, date2jalali
+from jalali_date import datetime2jalali
 from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
-from AddUser.models import MyUser
-
-class TaskAdmin(admin.ModelAdmin, ModelAdminJalaliMixin):
-    list_display = ('title', 'image_tag', 'description', 'jstartDate',)
-    list_filter = ['title', 'Experts']
-    search_fields = ('title', 'description')
-    ordering = ['startDate', 'status']
-
 
 
 class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
@@ -24,7 +16,12 @@ class JSONEditor:
     pass
 
 
-class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
+class TaskAdmin(admin.ModelAdmin, ModelAdminJalaliMixin):
+    list_display = ('title', 'description', 'status', 'Expert', 'jstartDate')
+    list_filter = ['title', ]
+    search_fields = ('title', 'description')
+    ordering = ['status']
+
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
 
@@ -32,4 +29,4 @@ class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     get_created_jalali.admin_order_field = 'created'
 
 
-admin.site.register(Task, FirstModelAdmin)
+admin.site.register(Task, TaskAdmin)

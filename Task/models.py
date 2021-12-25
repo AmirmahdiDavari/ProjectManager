@@ -1,19 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User
-from jalali_date import datetime2jalali
+# from jalali_date import datetime2jalali
 
 from Project.models import Project
 from ProjectManager.settings import AUTH_USER_MODEL
 from Step.models import Step
+from extentions.Utils import jalali_converter
 
 
 class Task(models.Model):
-    STATUS_TASK = {
+    STATUS_TASK = (
         (0, 'deActive'),
         (1, 'Active'),
         (2, 'Faile'),
         (3, 'Done'),
-    }
+    )
 
     SATTUS_RATE = {
         (1, '1'),
@@ -47,5 +48,10 @@ class Task(models.Model):
         verbose_name = "تسک"
         verbose_name_plural = "لیست تسک ها"
 
-    def my_view(request):
-        jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
+    # def my_view(request):
+    #     jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
+
+    def jstartDate(self):
+        return jalali_converter(self.endDate)
+
+    jstartDate.short_description = "زمان انتشار"

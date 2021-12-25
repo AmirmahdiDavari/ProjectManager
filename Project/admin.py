@@ -17,14 +17,14 @@ class JSONEditor:
     pass
 
 
-class end_date(Project):
-    def enddate(self):
-        if Project.status == 1:
-            Project.endDate = True
-        elif Project.status == 2:
-            Project.endDate = True
-        else:
-            Project.endDate = False
+# class end_date(Project):
+#     def enddate(self):
+#         if Project.status == 1:
+#             Project.endDate = True
+#         elif Project.status == 2:
+#             Project.endDate = True
+#         else:
+#             Project.endDate = False
 
 
 class ProjrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
@@ -36,11 +36,11 @@ class ProjrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     actions_selection_counter = True
     empty_value_display = 'وارد نشده ا ست '
 
-    # radio_fields = {"group": admin.VERTICAL}
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "Expert":
-            kwargs["queryset"] = MyUser.objects.filter(Expert__in=1)
-        return super(ProjrctAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+    # # radio_fields = {"group": admin.VERTICAL}
+    # def formfield_for_manytomany(self, db_field, request, **kwargs):
+    #     if db_field.name == "Expert":
+    #         kwargs["queryset"] = MyUser.objects.filter(Expert__in=1)
+    #     return super(ProjrctAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
@@ -48,19 +48,19 @@ class ProjrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     get_created_jalali.short_description = 'تاریخ ایجاد'
     get_created_jalali.admin_order_field = 'created'
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "myuser":
-            kwargs["queryset"] = MyUser.objects.filter(Role=1)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    class Meta:
-        def enddate(self):
-            if Project.status == 1:
-                Project.endDate = True
-            elif Project.status == 2:
-                Project.endDate = True
-            else:
-                Project.endDate = False
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     if db_field.name == "myuser":
+    #         kwargs["queryset"] = MyUser.objects.filter(Role=1)
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    #
+    # class Meta:
+    #     def enddate(self):
+    #         if Project.status == 1:
+    #             Project.endDate = True
+    #         elif Project.status == 2:
+    #             Project.endDate = True
+    #         else:
+    #             Project.endDate = False
 
 
 admin.site.register(Project, ProjrctAdmin)

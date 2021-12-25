@@ -29,7 +29,7 @@ class financial(models.Model):
     def jstartDate(self):
         return jalali_converter(self.Date)
 
-    jstartDate.short_description = "زمان انتشار"
+    jstartDate.short_description = "تاریخ واریز"
 
     class Meta:
         verbose_name = "مالی"

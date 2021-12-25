@@ -1,15 +1,6 @@
-import json
-from django.utils import timezone
-from datetime import date
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from .models import Task
-from rest_framework import status
-from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from datetime import datetime
-from django.http import HttpResponse, JsonResponse
-from django.views.generic import ListView
-from jalali_date import datetime2jalali, date2jalali
+from jalali_date import datetime2jalali
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Task
@@ -17,7 +8,7 @@ from .serializers import UpdateStatusTasktSerializer, allTasktSerializer, AllTas
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
 
 
-class updateTask(RetrieveUpdateAPIView):
+class updateTask (RetrieveUpdateAPIView):
     serializer_class = UpdateStatusTasktSerializer
 
     def get_queryset(self):
@@ -48,47 +39,9 @@ class TaskUpdate(RetrieveUpdateAPIView, LoginRequiredMixin):
             return Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True, status=1 | 2 | 3 | 0)
 
 
-# class Dashbord2(ListAPIView):
-#     serializer_class = allTasktSerializer
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get_queryset(self):
-#         queryset = Task.objects.filter(Expert=self.request.user, status=1)
-#         return queryset
-#
-#
 class Dashbord3(ListAPIView):
     serializer_class = AllTaskSerializer
     permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        def diffNowDate(Estimated_end):
-            from datetime import datetime
-            fmt = '%Y-%m-%d'
-            d2 = datetime.strptime(
-                str(datetime.now().year) + '-' + str(datetime.now().month) + '-' + str(datetime.now().day), fmt)
-            d1 = datetime.strptime(Estimated_end, fmt)
-            e = (d2 - d1).days
-            if e>=0:
-                queryset = Task.objects.filter(Expert=self.request.user)
-                return queryset
-            else:
-                return Response()
-
-#
-# class Dashbord1(ListAPIView):
-#     serializer_class = AllTaskSerializer
-#     permission_classes = (IsAuthenticated,)
-#     def get_queryset(self):
-#
-#         queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True)
-#
-#         return HttpResponse(queryset)
-
-
-
-def my_view(request):
-    jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
 
 
 class DashbordType(ListAPIView):
@@ -96,25 +49,27 @@ class DashbordType(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        type = self.request.GET.get('type')
-        type = int(type)
+        Type = self.request.GET.get('type')
+        Type = int(Type)
         datetime_object = datetime.now()
-        if type == 1:
+        if Type == 1:
             queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True)
 
             return queryset
-        elif type == 2:
-            queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__lte= datetime_object)
-            if (queryset):
-                queryset = Task.objects.filter(Expert=self.request.user,)
-                # print(datetime_object)
-                # print(Task.Estimated_end)
+        elif Type == 2:
+            queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__lte=datetime_object)
+            if queryset:
+                queryset = Task.objects.filter(Expert=self.request.user, )
+
                 return queryset
             else:
-                return Response({"mesage":"TASKI VOVJOD NADARAD"})
-        elif type == 3:
+                return Response({"mesage": "TASKI VOVJOD NADARAD"})
+        elif Type == 3:
             queryset = Task.objects.filter(Expert=self.request.user, status=1)
             return queryset
         else:
-            return Response({'mesege':"TYPE RA BE DOROSTI VARED KONID"})
+            return Response({'mesege': "TYPE RA BE DOROSTI VARED KONID"})
 
+
+def my_view(request):
+    jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')

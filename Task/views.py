@@ -39,15 +39,12 @@ class TaskUpdate(RetrieveUpdateAPIView, LoginRequiredMixin):
             return Task.objects.filter(Expert=self.request.user, Estimated_end__isnull=True, status=1 | 2 | 3 | 0)
 
 
-class Dashbord3(ListAPIView):
-    serializer_class = AllTaskSerializer
-    permission_classes = (IsAuthenticated,)
-
 
 class DashbordType(ListAPIView):
     serializer_class = allTasktSerializer
     permission_classes = (IsAuthenticated,)
 
+    @property
     def get_queryset(self):
         Type = self.request.GET.get('type')
         Type = int(Type)
@@ -60,7 +57,6 @@ class DashbordType(ListAPIView):
             queryset = Task.objects.filter(Expert=self.request.user, Estimated_end__lte=datetime_object)
             if queryset:
                 queryset = Task.objects.filter(Expert=self.request.user, )
-
                 return queryset
             else:
                 return Response({"mesage": "TASKI VOVJOD NADARAD"})

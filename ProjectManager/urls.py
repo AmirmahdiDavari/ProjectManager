@@ -32,3 +32,7 @@ urlpatterns = [
                   path('Project/', include('Project.urls')),
                   path('financial/', include('Financial.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.site_header = 'پنل مدیریت پروژه'
+admin.site.site_title = 'پنل مدیریت '
+admin.site.index_title = " "

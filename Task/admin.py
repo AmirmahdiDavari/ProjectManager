@@ -16,7 +16,7 @@ class JSONEditor:
     pass
 
 
-class TaskAdmin(admin.ModelAdmin, ModelAdminJalaliMixin):
+class TaskAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ('title', 'description', 'status', 'Expert', 'jstartDate')
     list_filter = ['title', ]
     search_fields = ('title', 'description')

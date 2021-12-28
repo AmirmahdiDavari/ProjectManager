@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
+from .views import project_scheduling
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -23,17 +23,9 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-                  path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-                  path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-                  path('admin/', admin.site.urls),
-                  path('Task/', include('Task.urls')),
-                  path('profile/', include('AddUser.urls')),
-                  path('api/', include('Task.urls')),
-                  path('Project/', include('Project.urls')),
-                  path('financial/', include('Financial.urls')),
-                  path('Scheduling/', include('Scheduling.urls')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("",project_scheduling),
 
-admin.site.site_header = 'پنل مدیریت پروژه'
-admin.site.site_title = 'پنل مدیریت '
-admin.site.index_title = " "
+
+                ]
+
+

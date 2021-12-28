@@ -17,16 +17,6 @@ class JSONEditor:
     pass
 
 
-# class end_date(Project):
-#     def enddate(self):
-#         if Project.status == 1:
-#             Project.endDate = True
-#         elif Project.status == 2:
-#             Project.endDate = True
-#         else:
-#             Project.endDate = False
-
-
 class ProjrctAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ('title', 'image_tag', 'description', 'jstartDate', 'status')
     list_filter = ['title', 'Experts']

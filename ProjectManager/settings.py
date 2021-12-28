@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     "extentions",
     'jalali_date',
     'django_filters',
+    'Scheduling',
 
 )
 

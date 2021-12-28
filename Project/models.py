@@ -23,9 +23,10 @@ class Project(models.Model):
     title = models.CharField(max_length=100, verbose_name="عنوان")
     description = models.TextField(null=False, verbose_name="توضیحات")
     image = models.ImageField(upload_to='images', null=True, verbose_name="عکس")
-    Experts = models.ManyToManyField(AUTH_USER_MODEL,limit_choices_to={'groups__name':""},
+    Experts = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__name': "Expert"},
                                      related_name="creator_set", verbose_name="کارشناس ها")
-    ScrumMaster = models.ManyToManyField(AUTH_USER_MODEL,limit_choices_to={'groups__name':"ScrumMaster"}, verbose_name="اسکرام مستر")
+    ScrumMaster = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__name': "ScrumMaster"},
+                                         verbose_name="اسکرام مستر")
     startDate = models.DateField(verbose_name="زمان شروع")
     endDate = models.DateField(verbose_name="زمان پایان")
     status = models.IntegerField(choices=sorted(STATUS_CHOICES), default=2, verbose_name="وضعیت", null=True, blank=True)
@@ -33,10 +34,6 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'پروژه'
         verbose_name_plural = "لیست پروژه ها"
-
-    # def filteexpert(self):
-    #     queriset = AUTH_USER_MODEL(AUTH_USER_MODEL__Myuser__Rool__in=1)
-    #     print(queriset)
 
     def __str__(self):
         return self.title

@@ -1,0 +1,22 @@
+<html>
+    <body>
+     <table>
+         <thead>
+         <th>آیدی زمانبندی</th>
+         <th>تاریخ</th>
+         <th>زمان شروع</th>
+         <th>زمان پایان</th>
+         </thead>
+         {% for a in time %}
+             <tr>
+             <td>{{ a.scheduling_id }}</td>
+             <td>{{ a.data }}</td>
+             <td>{{ a.startTime }}</td>
+             <td>{{ a.endTime }}</td>
+             </tr>
+
+
+         {% endfor %}
+     </table>
+    </body>
+</html>

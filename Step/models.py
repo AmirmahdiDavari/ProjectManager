@@ -1,12 +1,10 @@
 from django.db import models
+from AddUser.models import MyUser
 from Project.models import Project
 
 
 class parent(models.Model):
-    parentname = models.CharField(max_length=50, verbose_name='نام والد')
 
-    def __str__(self):
-        return self.parentname
 
     class Meta:
         verbose_name = "والد"
@@ -19,13 +17,14 @@ class Step(models.Model):
         (2, 'normal'),
         (3, 'low')
     }
-    Name = models.CharField(max_length=200, verbose_name='عنوان')
+    name = models.CharField(max_length=200, verbose_name='عنوان')
     priority = models.IntegerField(verbose_name='اولویت')
-    ProjectId = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, verbose_name='ایدی پروژه')
-    Parent = models.OneToOneField(parent, on_delete=models.CASCADE, null=True, verbose_name='ایدی والد')
-
+    projectId = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, verbose_name='ایدی پروژه',related_name="steps")
+    parent = models.ForeignKey('self', verbose_name=("والد"), null=True,blank=True,on_delete=models.CASCADE)
+    createDate=models.DateField("تاریخ ایجاد", auto_now_add=True)
+    creator=models.ForeignKey(MyUser, verbose_name=("ایجاد کننده"),null=True,blank=True, on_delete=models.CASCADE)
     def __str__(self):
-        return self.Name
+        return self.name
 
     class Meta:
         verbose_name = "مرحله"

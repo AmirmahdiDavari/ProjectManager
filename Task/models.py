@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from AddUser.models import MyUser
 # from jalali_date import datetime2jalali
 
 from Project.models import Project
@@ -29,16 +30,17 @@ class Task(models.Model):
         (3, 'low')
     }
     title = models.CharField(max_length=100, null=True, verbose_name='عنوان')
-    description = models.TextField(null=True, verbose_name='توضیحات')
-    createDate = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='تاریخ ایجاد')
-    # startDate = models.DateField(blank=True,null=True)
-    endDate = models.DateField(blank=True, null=True, verbose_name='تاریخ پایان')
+    description = models.TextField(null=True,blank=True, verbose_name='توضیحات')
+    createDate = models.DateField(auto_now_add=True, editable=False, verbose_name='تاریخ ایجاد')
+    startDate = models.DateField(blank=True,null=True,verbose_name='تاریخ شروع')
+    creator=models.ForeignKey(MyUser,related_name="taskCreates",null=True,blank=True, verbose_name=("ایجاد کننده"), on_delete=models.CASCADE)
+    # endDate = models.DateField(blank=True, null=True, verbose_name='تاریخ پایان')
     status = models.IntegerField(choices=sorted(STATUS_TASK), default=0, blank=True, null=True, editable=False,
                                  verbose_name='وضعیت')
-    Estimated_end = models.DateField(blank=True, null=True, editable=False, verbose_name='پایان تخمینی')
-    StepID = models.ForeignKey(Step, on_delete=models.CASCADE, blank=True, null=True, verbose_name='شناسه مرحله')
+    estimated_end = models.DateField(blank=True, null=True, editable=False, verbose_name='پایان تخمینی')
+    stepId = models.ForeignKey(Step, on_delete=models.CASCADE, blank=True, null=True, verbose_name='شناسه مرحله',related_name="tasks")
     ratePerformance = models.IntegerField(choices=sorted(SATTUS_RATE), null=True, editable=False, verbose_name='امتیاز')
-    Expert = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='کارشناس')
+    expert = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, verbose_name='کارشناس')
     periority = models.IntegerField(choices=sorted(SATTUS_Periority), default=3, verbose_name='الویت')
 
     def __str__(self):
@@ -47,11 +49,12 @@ class Task(models.Model):
     class Meta:
         verbose_name = "تسک"
         verbose_name_plural = "لیست تسک ها"
+        
 
     # def my_view(request):
     #     jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
 
-    def jstartDate(self):
-        return jalali_converter(self.endDate)
+    # def jstartDate(self):
+    #     return jalali_converter(self.endDate)
 
-    jstartDate.short_description = "زمان انتشار"
+    # jstartDate.short_description = "زمان انتشار"

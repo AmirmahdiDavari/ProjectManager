@@ -21,12 +21,12 @@ class Project(models.Model):
     }
 
     title = models.CharField(max_length=100, verbose_name="عنوان")
+    creator=models.ForeignKey(MyUser,related_name="projectCreates",null=True,blank=True, verbose_name=("ایجاد کننده"), on_delete=models.CASCADE)
+    createDate=models.DateField(auto_now_add=True)
     description = models.TextField(null=False, verbose_name="توضیحات")
-    image = models.ImageField(upload_to='images', null=True, verbose_name="عکس")
-    Experts = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__name': "Expert"},
-                                     related_name="creator_set", verbose_name="کارشناس ها")
-    ScrumMaster = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__name': "ScrumMaster"},
-                                         verbose_name="اسکرام مستر")
+    image = models.ImageField(upload_to='project/images', null=True, verbose_name="عکس")
+    experts = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 1},related_name="projects", verbose_name="کارشناس ها")
+    scrumMaster = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 2},related_name="scrumasterProjects",verbose_name="اسکرام مستر")
     startDate = models.DateField(verbose_name="زمان شروع")
     endDate = models.DateField(verbose_name="زمان پایان")
     status = models.IntegerField(choices=sorted(STATUS_CHOICES), default=2, verbose_name="وضعیت", null=True, blank=True)
@@ -40,13 +40,5 @@ class Project(models.Model):
 
     def image_tag(self):
         return format_html("<img width=100 height=75 src='{}'>".format(self.image.url))
+    image_tag.short_description = "تصویر"
 
-    image_tag.short_description = "عکس"
-
-    def jstartDate(self):
-        return jalali_converter(self.startDate)
-
-    jstartDate.short_description = "زمان انتشار"
-
-    def my_view(request):
-        jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')

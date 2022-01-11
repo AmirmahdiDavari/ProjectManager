@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import ViewFinancial
+from .views import *
 
 urlpatterns = [
-    path('', ViewFinancial.as_view()),
+    path('', financial),
 
 ]

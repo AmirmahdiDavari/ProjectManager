@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-rf9ap3jwpvr4vl&bvn91*1!=i1uxla_!5msyi&fi%4d%=$(jq!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.56', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.56','185.226.119.202', '127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = (
+    'admin_volt.apps.AdminVoltConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -119,10 +120,10 @@ WSGI_APPLICATION = 'ProjectManager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projectmanage',
+        'NAME': 'project',
         'USER': 'root',
-        # 'PASSWORD':'@0481049452mir',
-        'HOST': 'localhost',
+        'PASSWORD':'u3%^euYEYEYheaelmGP6W3ge2',
+        'HOST': 'mariadb',
         'PORT': '3306',
     }
 }
@@ -161,7 +162,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -169,9 +171,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-MEDIA_URL = '/media/'
+    BASE_DIR / "static",
+    BASE_DIR / "media"
+    ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

@@ -5,6 +5,14 @@ from .models import MyUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = "__all__"
+        fields = ['id','username','email']
+        # exclude=('type','money')
+        # depth=1
+
+
+class UserNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ['id','username']
         # exclude=('type','money')
         # depth=1

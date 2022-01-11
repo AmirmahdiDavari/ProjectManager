@@ -3,6 +3,12 @@ from .models import Task
 from django.contrib.auth import get_user_model
 
 
+
+class TaskSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Task
+        fields='__all__'
+
 class AllTaskSerializer(serializers.ModelSerializer):
     enddate = serializers.HiddenField
 

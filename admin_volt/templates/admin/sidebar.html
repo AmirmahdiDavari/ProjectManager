@@ -39,60 +39,71 @@
             </div>
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
-            <li class="nav-item">
-                <a href="{% url 'admin:index' %}" class="nav-link d-flex align-items-center">
-                    <span class="sidebar-icon">
-                       <img src="{% static 'admin_volt/assets/img/brand/light.svg' %}" height="20" width="20" alt="Volt Logo">
-                    </span>
-                    <span class="mt-1 ms-1 sidebar-text">{% trans 'Administrator' %}</span>
+            <li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
+
+                <a href="{% url 'admin:index' %}" class="nav-link">
+                    <span class="sidebar-icon fa fa-home"></span>
+                    <span class="sidebar-text">{% trans 'خانه' %}</span>
                 </a>
             </li>
 
-            <li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
-                <a href="{% url 'admin:index' %}" class="nav-link">
-                    <span class="sidebar-icon fa fa-home"></span>
-                    <span class="sidebar-text">{% trans 'Dashboard' %}</span>
+            <li class="nav-item">
+                <a href="{% url 'project:list_project' %}" class="nav-link d-flex align-items-center">
+                    <span class="sidebar-icon">
+<!--                       <img src="{% static 'admin_volt/assets/img/brand/light.svg' %}" height="20" width="20"-->
+<!--                            alt="Volt Logo">-->
+                    </span>
+                    <span class="mt-1 ms-1 sidebar-text">{% trans 'لیست پروژه' %}</span>
                 </a>
             </li>
+
 
             {% admin_get_menu as app_list %}
             {% if app_list %}
-                {% for app in app_list %}
-                    {% if app.has_perms and not app.pinned %}
-                        <li class="nav-item">
-                            <span class="nav-link collapsed d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-{{ app.app_label }}">
+            {% for app in app_list %}
+            {% if app.has_perms and not app.pinned and app.label != "Api" and app.label != "مرحله" and app.label != "تسک" and app.label != "grup"%}
+
+            <li class="nav-item">
+                            <span class="nav-link collapsed d-flex justify-content-between align-items-center"
+                                  data-bs-toggle="collapse" style="" data-bs-target="#submenu-{{ app.app_label }}">
                                 <span>
-                                    <span class="sidebar-icon {{ app.icon }}"></span>
+<!--                                    <span class="sidebar-icon {{ app.icon }}"></span>-->
                                     <span class="sidebar-text">{{ app.label|slice:18 }}{% if app.label|length > 18 %}..{% endif %}</span>
                                 </span>
-                                {% if app.models %}
-                                    <span class="link-arrow">
-                                        <svg class="icon icon-sm" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z">
-                                        </svg>
-                                    </span>
-                                {% endif %}
+<!--                                {% if app.models %}-->
+<!--                                    <span class="link-arrow">-->
+<!--                                        <svg class="icon icon-sm" fill="currentColor" xmlns="http://www.w3.org/2000/svg"-->
+<!--                                             width="24" height="24" viewBox="0 0 24 24">-->
+<!--                                            <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z">-->
+
+<!--                                            </path>-->
+<!--                                        </svg>-->
+
+<!--                                    </span>-->
+<!--                                {% endif %}-->
                             </span>
 
-                            {% if app.models %}
-                                <div class="multi-level collapse {% if 'tables-bootstrap-' in segment %} show {% endif %}" role="list" id="submenu-{{ app.app_label }}" aria-expanded="false">
-                                    <ul class="flex-column nav">
-                                        {% for model in app.models %}
-                                            {% if model.url %}
-                                                <li class="nav-item {% if 'bootstrap-tables' in segment %} active {% endif %}">
-                                                    <a class="nav-link" href="{{ model.url }}">
-                                                        <span class="sidebar-text">{{ model.label }}</span>
-                                                    </a>
-                                                </li>
-                                            {% else %}
-                                                <li>{{ model.label }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                {% if app.models %}
+                <div class="multi-level collapse {% if 'tables-bootstrap-' in segment %} show {% endif %}" role="list"
+                     id="submenu-{{ app.app_label }}" aria-expanded="false">
+                    <ul class="flex-column nav">
+                        {% for model in app.models %}
+                        {% if model.url %}
+                        <li class="nav-item {% if 'bootstrap-tables' in segment %} active {% endif %}">
+                            <a class="nav-link" href="{{ model.url }}">
+                                <span class="sidebar-text">{{ model.label }}</span>
+                            </a>
                         </li>
-                    {% endif %}
-                {% endfor %}
+                        {% else %}
+                        <li>{{ model.label }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </li>
+            {% endif %}
+            {% endfor %}
             {% endif %}
         </ul>
     </div>

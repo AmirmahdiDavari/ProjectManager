@@ -28,7 +28,7 @@ def loginPhone(request):
     
     user=MyUser.objects.filter(phone=request['phone']).first()
 
-    # برای سریالایزر کردن استافده میشه
+    # برای سریالایزر کردن استفاده میشه
     # user=MyUserSerializers(user,many=False)
     # return response(False,'شماره تماس را وارد کنید ',user.data,200)
     

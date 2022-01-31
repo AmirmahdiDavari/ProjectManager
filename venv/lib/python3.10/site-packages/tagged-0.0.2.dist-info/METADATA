@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: tagged
+Version: 0.0.2
+Summary: Tagged templates for Python
+Home-page: https://github.com/jviide/tagged
+Author: Joachim Viide
+Author-email: jviide@iki.fi
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+# tagged [![CircleCI](https://circleci.com/gh/jviide/tagged.svg?style=shield)](https://circleci.com/gh/jviide/tagged) [![PyPI](https://img.shields.io/pypi/v/tagged.svg?color=blue)](https://pypi.org/project/tagged/)
+
+A Python version of JavaScript's [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates), mixed with Python 3's [f-strings](https://docs.python.org/3/reference/lexical_analysis.html#f-strings).
+
+For a more involved example how this package can be used in practice, see [htm.py](https://github.com/jviide/htm.py) that implements JSX-like syntax in plain Python.
+
+## Installation
+
+```sh
+$ pip3 install tagged
+```
+
+## Usage
+
+This package defines `tag`, a decorator for creating new tags. Let's define a simple one:
+
+```py
+from tagged import tag
+
+@tag
+def t(strings, values):
+    return strings, values
+```
+
+Now `t` can be called with a template string that can contain any Python 3 expression between `{` and `}`. The "static" parts of the string are listed in `strings` and the evaluated expressions are listed in `values`.
+
+```py
+strings, values = t("1 + {2} equals {1 + 2}")
+# strings == ('1 + ', ' equals ', '')
+# values == (2, 3)
+```
+
+Because the expressions are evaluated in the current context they can refer to local variables:
+
+```py
+a = [1, 2, 3]
+strings, values = t("the sum of {a} is {sum(a)}")
+# strings == ('the sum of ', ' is ', '')
+# values == ([1, 2, 3], 6)
+```
+
+Double curly brackets are interpreted as a single textual curly bracket:
+
+```py
+strings, values = t("Inline a set between {{ and }} like this: {({1, 2, 3})}")
+# strings == ('Inline a set between { and } like this: ', '')
+# values == ({1, 2, 3},)
+```
+
+## rexample
+
+Let's define a custom tag `rex` that allows composing regular expressions from strings and other regular expressions.
+
+```py
+import re
+from tagged import tag
+
+
+@tag
+def rex(strings, values):
+    pattern = strings[0]
+    for value, string in zip(values, strings[1:]):
+        if isinstance(value, re.Pattern):
+            value = value.pattern
+        elif isinstance(value, str):
+            value = re.escape(value)
+        else:
+            raise TypeError("expected re.Pattern or str")
+        pattern += "(?:" + value + ")" + string
+    return re.compile(pattern)
+
+
+greeting = re.compile("Hello|Hi|Greetings")
+name = "Python 3.7"
+
+rex("{greeting}, {name}!")
+# re.compile('(?:Hello|Hi|Greetings), (?:Python\\ 3\\.7)!')
+```
+
+## Development
+
+### Running Tests
+
+```sh
+$ python3 -m unittest discover -s tests
+```
+
+## License
+
+This library is licensed under the MIT license. See [./LICENSE](./LICENSE).
+
+

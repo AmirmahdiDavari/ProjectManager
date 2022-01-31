@@ -25,7 +25,7 @@ class project_scheduling(models.Model):
 
     class Meta:
         verbose_name = 'نام پروژه'
-        verbose_name_plural = "لیست زمانبندی پروژه"
+        verbose_name_plural = "لیست زمانبندی پروژه  "
 
     def __int__(self):
         return self.status

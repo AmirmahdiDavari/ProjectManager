@@ -5,7 +5,8 @@ from .models import MyUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = ['id','username','email']
+        # fields = ['id','full_name','image']
+        fields = ['id','image','first_name', 'last_name']
         # exclude=('type','money')
         # depth=1
 

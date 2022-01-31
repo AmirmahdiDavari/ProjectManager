@@ -9,17 +9,60 @@ from base.views import response
 from Project.models import *
 
 
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def financial(request):
-    status,message,data=False,"خطا در api",""
-    financial=request.user.userMoneydepositor
-    financial=FinancialSerializer(financial,many=True).data
-    message,data="پرداخت ها با موفقیت بازگردانده شدند",financial
-    try:
-        financial=request.user.userMoneydepositor
-        financial=FinancialSerializer(financial,many=True).data
-        message,data="پرداخت ها با موفقیت بازگردانده شدند",financial
-    except Exception:
-        message="پرداختی یافت نشد"
-    return response(status,message,data)
+# @api_view(['GET'])
+# @permission_classes([permissions.IsAuthenticated])
+# def financial(request):
+#     status,message,data=False,"خطا در api"," "
+#     try:
+#         financial=request.user.userMoneydepositor
+        
+
+       
+
+#         financials=FinancialSerializer(financial,many=True)
+#         print(len (financials.data))
+        
+#         data=financials.data
+#         if data.is_valid==False:
+#             message,data,status="پرداخ شدند"," ",False
+#         message,data,status="پرداخت ها با موفقیت بازگردانده شدند",data,True
+
+#     except :
+#         message ="پرداخت ها با موفقیت بازگردانده شدند"
+
+#     return response(status,message,data)
+# @api_view(['GET'])
+# @permission_classes([permissions.IsAuthenticated])
+# def financial(request):
+#     status,message,data=False,"خطا در api"," "
+#     try:
+#         financial=request.user.userMoneydepositor
+#         financials=FinancialSerializer(financial,many=True)
+#         data=financials.data
+#         if len(data) >0:
+#             message, data, status = " ها با موفقیت بازگردانده شدند", data, True
+#         else :
+#             message , data , status = "پرداختی وجود ندارد " , "" , False
+
+#     except :
+#         pass
+#         # message , data , status = "test" , "" , False
+#     return response(status,message,data)
+
+
+class FinancialList(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get (self,request):
+        status, message, data = False, "خطا در api", ""
+        try:
+            financial=request.user.userMoneydepositor
+            financials=FinancialSerializer(financial,many=True)
+            data=financials.data
+            if not data:
+                return response (" صورتحساب مالی یافت نشد", " ", False)
+            message,status,data="صورتحساب مالی با موفقیت بازگردانده شد ",True,data
+            
+            
+        except:
+            pass
+        return response(status, message, data)

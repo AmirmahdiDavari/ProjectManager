@@ -39,17 +39,19 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'debug_toolbar',
     "AddUser",
     'rest_framework_swagger',
     "Project.apps.ProjectConfig",
     "Task.apps.TaskConfig",
     "Step.apps.StepConfig",
     "Financial.apps.FinancialConfig",
-    # "AddUser.apps.AddUserConfig",
     "extentions",
     'jalali_date',
     'django_filters',
     'Scheduling',
+    "Api",
+
 
 )
 
@@ -85,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ProjectManager.urls'

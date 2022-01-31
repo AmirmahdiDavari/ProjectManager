@@ -26,12 +26,13 @@ urlpatterns = [
 path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 path('admin/', admin.site.urls),
-path('api/task/', include('Task.urls'),name="task api update status"),
+path('api/task/', include('Task.urls'),name="task api update status"),          
 path('api/project/', include('Project.urls')),
 path('api/step/', include('Step.urls')),
 path('api/financial/', include('Financial.urls')),
 
 path('user/',include('AddUser.urls')),
+path('__debug__/', include('debug_toolbar.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

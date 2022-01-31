@@ -13,15 +13,18 @@ class financial(models.Model):
     }
 
     title = models.CharField(max_length=50, verbose_name="عنوان")
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name="ایدی پروژه")
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name="نام  پروژه")
     Date = models.DateField(auto_now=True, verbose_name="تاریخ واریز")
     Description = models.TextField(verbose_name="توضیحات")
-    image = models.ImageField(upload_to='financial/images', null=True, verbose_name="عکس")
+    image = models.ImageField(upload_to='financial/images', null=True, verbose_name="عکس واریزی ")
     type = models.IntegerField(choices=sorted(STATUS_TYPE), verbose_name="نوع")
-    money = models.CharField(max_length=50, verbose_name="پول")
-    userRecipientofmoney = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,blank=True,on_delete=models.CASCADE, related_name='userMoneydepositor',
-                                                  verbose_name="دریافت کننده")
-    userMoneydepositor = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,blank=True,on_delete=models.CASCADE, verbose_name="پرداخت کننده")
+    money = models.CharField(max_length=50, verbose_name="مقدار پول")
+    userRecipientofmoney = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE,
+                                             related_name='userMoneydepositor',
+                                             verbose_name="دریافت کننده")
+    userMoneydepositor = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE,
+                                           verbose_name="پرداخت کننده")
+    creator_financial= models.ForeignKey(settings.AUTH_USER_MODEL,related_name='creator_financial',null=True,blank=True,on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title

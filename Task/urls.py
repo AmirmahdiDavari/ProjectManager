@@ -1,7 +1,11 @@
 from django.urls import path
-from .views import *
-
+from Task.views import TaskList,updateTask,TaskDetail,task_project,task_detile
+app_name = "Task"
 urlpatterns = [
-    path('<int:id>', updateTask),
-     path('withProjectId/<int:id>', getTaskWithProjectId),
+
+    path('list',TaskList.as_view()),
+    path('list/<int:id>',TaskDetail.as_view()),
+    path('task_project',task_project.as_view(),name='Task_project'),
+    path('task_detile',task_detile.as_view(),name='task_detile'),
+
 ]

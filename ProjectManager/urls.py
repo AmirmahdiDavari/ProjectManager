@@ -30,11 +30,19 @@ path('api/task/', include('Task.urls'),name="task api update status"),
 path('api/project/', include('Project.urls')),
 path('api/step/', include('Step.urls')),
 path('api/financial/', include('Financial.urls')),
-
 path('user/',include('AddUser.urls')),
+path('Api/',include('Api.urls')),
 path('__debug__/', include('debug_toolbar.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = 'Project.views.handler404'
+handler500 = 'Project.views.handler500'
+handler403 = 'Project.views.handler403'
+# handler400 = 'myappname.views.error_400'
+
+
 
 admin.site.site_header = 'پنل مدیریت پروژه'
 admin.site.site_title = 'پنل مدیریت '

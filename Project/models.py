@@ -12,9 +12,9 @@ class Sections(models.Model):
     pid = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="زیرمجموعه")
     status = models.BooleanField(default=True, verbose_name="وضعیت")
 
-    class Meta:
-        verbose_name = 'بخش '
-        verbose_name_plural = 'بخش ها '
+    # class Meta:
+    #     verbose_name = 'بخش '
+    #     verbose_name_plural = 'بخش ها '
 
     def __str__(self):
         return self.name
@@ -47,7 +47,7 @@ class Project(models.Model):
     sections = models.ManyToManyField("Project.Sections", related_name="projects", 
                                       verbose_name="بخش ها")
 
-    status = models.IntegerField(choices=sorted(STATUS_CHOICES), default=2, verbose_name="وضعیت", null=True, blank=True)
+    status = models.IntegerField(choices=sorted(STATUS_CHOICES), default=3, verbose_name="وضعیت", null=True, blank=True , editable=False)
 
     class Meta:
         verbose_name = 'پروژه'

@@ -121,32 +121,66 @@
     <!-- End Sidebar -->
     <div style="text-align: end;    ">
 
-        <a href="{% url 'Task:Task_project' %}" class="btn btn-danger btn- ">بازگشت</a>
+        <a href="{% url 'project:list_project' %}" class="btn btn-danger btn- ">بازگشت</a>
     </div>
 
 
     <!-- Footer -->
     <footer class="bg-white rounded shadow p-5 mb-4 mt-4" dir="rtl">
+
         <div class="row">
 
+
+            <a class="btn btn-danger">لیست تسک های زمان دهی شده </a>
             {% for Task in object_list %}
-            <!--            <div class="col-4 my-1">-->
+            {% if Task.estimated_end != null %}
+            <div class="col-md-4">
+                <br>
+                <p> نام پروژه: {{Task.category.project_id}}</p>
+                <p> ایدی  تسک: {{Task.id}}</p>
+                <p> نام تسک: {{Task.title}}</p>
+                <p>نام کارشناس : {{Task.expert}}</p>
+                <p> دسته بندی : {{Task.category}}</p>
+                <p>توضیحات : {{Task.description}}</p>
+                <p>تاریخ شروع: {{Task.jstartDate}}</p>
+                <p>پایان تخمینی  : {{Task.jestimated_end}}</p>
+                <br>
+                {% if Task.category.section_id_id == 8  %}
+                <a href="{% url 'Api:api_mg' %}?TaskId={{Task.id}}" class="btn btn-danger btn- ">جزئیات تسک </a>
+                {% endif %}
+                {% if Task.estimated_end == null %}
+                <a href="{% url 'Api:task_mg' %}?TaskId={{Task.id}}" class="btn btn-danger btn- "> زماندهی تسک ها  </a>
+                {% endif%}
+                <br>
+                <br>
+            </div>
+            {% endif %}
+           {% endfor %}
+            <a class = "btn btn-danger">تسک های زمان دهی نشده</a>
+            {% for Task in object_list %}
+            {% if Task.estimated_end == null %}
+                <div class="col-md-4">
+                    <br>
+                    <p> نام پروژه: {{Task.category.project_id}}</p>
+                    <p> ایدی  تسک: {{Task.id}}</p>
+                    <p> نام تسک: {{Task.title}}</p>
+                    <p>نام کارشناس : {{Task.expert}}</p>
+                    <p> دسته بندی : {{Task.category}}</p>
+                    <p>توضیحات : {{Task.description}}</p>
+                    <p>تاریخ شروع: {{Task.JstartDate}}</p>
+                    <p>پایان تخمینی  : {{Task.estimated_end}}</p>
+                    <br>
+                    {% if Task.category.section_id_id == 8  %}
+                    <a href="{% url 'Api:api_mg' %}?TaskId={{Task.id}}" class="btn btn-danger btn- ">جزئیات تسک </a>
+                    {% endif %}
+                    <a href="{% url 'Api:task_mg' %}?TaskId={{Task.id}}" class="btn btn-danger btn- "> زماندهی تسک ها  </a>
+                    <br>
+                    <br>
+                </div>
+            {% endif %}
+           {% endfor %}
 
-            <p> دسته بندی : {{Task.category}}</p>
-            <p> نام تسک: {{Task.title}}</p>
-            <p>توضیحات : {{Task.description}}</p>
-            <p>تاریخ شروع: {{Task.startDate}}</p>
-            <p>نام کارشناس : {{Task.expert}}</p>
-            <br>
-            _________________________________________________________________________________________________
-            <!--            </div>-->
-            <!--            <div class="col-8 my-1">-->
-            <!--                <a  href="{% url 'Task:task_detile' %}" class="btn btn-danger btn- mx-5">جزئیات تسک </a>-->
-            <!--            </div>-->
-
-            {% endfor %}
         </div>
-
 
         {% comment %}
         <div class="row">
@@ -158,10 +192,10 @@
                 </p>
             </div>
             <div class="col-12 col-md-8 col-xl-6 text-center text-lg-start">
-                {% for project in object_list %}
+                <!-- {% for project in object_list %}
                 <a href="">{{project.title}}</a>
                 <br>
-                {% endfor %}Q
+                {% endfor %}Q -->
                 <!-- List -->
                 <ul class="list-inline list-group-flush list-group-borderless text-md-end mb-0">
                     <li class="list-inline-item px-0 px-sm-2">

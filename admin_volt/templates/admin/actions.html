@@ -11,7 +11,7 @@
             {% endfor %}
         {% endblock %}
         {% block actions-submit %}
-            <button type="submit" class="btn btn-fill btn-sm btn-primary" title="{% trans "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+            <button type="submit" class="btn btn-fill btn-sm btn-primary" title="{% trans 'Run the selected action' %}" name="index" value="{{ action_index|default:0 }}">
                 {% trans "Go" %}
             </button>
         {% endblock %}
@@ -22,7 +22,7 @@
                     <span class="all">{{ selection_note_all }}</span>
                     <span class="question">
                         <a href="#"
-                           title="{% trans "Click here to select the objects across all pages" %}">{% blocktrans with cl.result_count as total_count %}
+                           title="{% trans 'Click here to select the objects across all pages' %}">{% blocktrans with cl.result_count as total_count %}
                             Select all {{ total_count }} {{ module_name }}{% endblocktrans %}</a>
                     </span>
                     <span class="clear"><a href="#">{% trans "Clear selection" %}</a></span>

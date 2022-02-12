@@ -28,9 +28,6 @@ class JSONEditor:
 
 class TaskAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 
-    print ('dddddddddddddddd')
-    # print(obj.name)
-
     list_display = ('title', 'description', 'get_createDate', 'get_startDate', 'expert', 'message', 'develop', 'validation')
     search_fields = ('title', 'description')
 
@@ -109,6 +106,7 @@ class TaskAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     #         request = request.split('=')[1]
     #         obj.task = Task.objects.get(id=request)
     #         return super().save_model(request, obj, form, change)
+
 
 
 admin.site.register(Task, TaskAdmin)

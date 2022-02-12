@@ -10,5 +10,5 @@ urlpatterns = [
     path('',ProjectList.as_view()),
     path('members/<int:id>',ProjectMembers.as_view()),
 
-    path('1/',list_project.as_view(),name= 'list_project'),
+    path('list_project',list_project.as_view(),name= 'list_project'),
 ]

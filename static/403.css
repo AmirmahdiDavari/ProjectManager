@@ -1,0 +1,41 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: FireBrick;
+  font-family: sans-serif;
+}
+
+#wrapper {
+  padding-top: calc(50vh - 7.5vmin);
+}
+
+#error403 {
+  width: 90vmin;
+  height: 15vmin;
+  padding: 0;
+  margin: 0 auto;
+  background-color: white;
+  color: FireBrick;
+  font-size: 20vmin;
+  line-height: 20vmin;
+  overflow: hidden;
+}
+#error403 h1 {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  top: -2vmin;
+}
+.subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0;
+  margin: 0 auto;
+  margin-top: 2vmin;
+  font-size: 5vmin;
+  font-weight: bold;
+}

@@ -20,8 +20,8 @@ class MyUserAdmin(UserAdmin):
         (_('Important dates'), {'fields': ('date_joined',)}),
     )
     UserAdmin.list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff','get_groups')
-    UserAdmin.list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-    UserAdmin.search_fields = ('username', 'first_name', 'last_name', 'email')
+    # UserAdmin.list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    # UserAdmin.search_fields = ('username', 'first_name', 'last_name', 'email')
 
     def get_groups(self,queri):
         return str(tuple(queri.groups.values_list('name',flat=True)))

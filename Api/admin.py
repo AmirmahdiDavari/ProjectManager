@@ -46,7 +46,7 @@ class Admin_Message(ModelAdminJalaliMixin, admin.ModelAdmin):
 
 class Admin_Validation(ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ('title', 'status',)
-    exclude = ['creator_id','task_id',]
+    exclude = ['creator_id', 'task_id', ]
     actions_on_top = False
 
     # save catgoriID & User_Creator ID in databise

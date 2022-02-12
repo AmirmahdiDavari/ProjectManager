@@ -1,6 +1,7 @@
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
-# from django.utils.generic import ListView  
+from jalali_date import datetime2jalali, date2jalali
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
 from django.views.generic.list import ListView
 from .models import *
 from .serializers import *
@@ -9,7 +10,6 @@ from base.views import response
 from Project.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 
 
 @api_view(["PUT"])
@@ -106,10 +106,49 @@ class TaskDetail(APIView):
 
 
 class task_project(ListView):
-    model=Task
+    permission_classes =(IsAuthenticated,)
     template_name='Task.html'
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Task.objects.all()
+        else:
+            return Task.objects.filter(expert=self.request.user)
 
-
+#
 class task_detile(ListView):
-    model=Task
+    permission_classes=(IsAuthenticated,)
     template_name='Task_detile.html'
+
+#     def form_field_for_foreignkey(self, request):
+#         if request.GET:
+#             request = request.GET['_changelist_filters']
+#
+#
+#     def get_queryset(self):
+#         if self.request.user.is_superuser:
+#             qs=Task.objects.all()
+#             return (qs)
+#         else:
+#             qs=Task.objects.get(project_id=request)
+#
+#             return Task.objects.filter(expert=self.request.user)
+
+
+    def get_queryset(self):
+        request = self.request.GET
+
+        if self.request.method == 'GET':
+            if self.request.user.is_superuser:
+                request=request['projectId']
+
+                queryset = Task.objects.filter(category__project_id__id=request)
+
+                return queryset
+            else:
+                request=request['projectId']
+                print(request)
+
+                queryset= Task.objects.filter(category__project_id__id=request,expert=self.request.user)
+
+                return queryset
+

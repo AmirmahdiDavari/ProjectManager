@@ -2,13 +2,13 @@ from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 from AddUser.models import MyUser
-# from jalali_date import datetime2jalali
+from jalali_date import datetime2jalali
 from Project.models import *
 from ProjectManager.settings import AUTH_USER_MODEL
 
 
 # from Step.models import Step
-# from extentions.Utils import jalali_converter
+from extentions.Utils import jalali_converter
 
 
 class Task(models.Model):
@@ -36,7 +36,7 @@ class Task(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='عنوان')
     description = models.TextField(null=True, blank=True, verbose_name='توضیحات')
     createDate = models.DateField(auto_now_add=True, editable=False, verbose_name='تاریخ ایجاد')
-    startDate = models.DateField(blank=True, null=True, verbose_name='تاریخ شروع')
+    startDate = models.DateField(blank=True, null=True, verbose_name='تاریخ شروع' , editable=False)
     creator = models.ForeignKey(MyUser, related_name="taskCreates", editable=False, null=True, blank=True,
                                 verbose_name="ایجاد کننده",
                                 on_delete=models.SET_NULL)
@@ -57,8 +57,12 @@ class Task(models.Model):
 
     # def my_view(request):
     #     jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
+    def jstartDate(self):
+        return jalali_converter(self.startDate)
+    jstartDate.short_description = "زمان انتشار"
 
-    # def jstartDate(self):
-    #     return jalali_converter(self.endDate)
 
-    # jstartDate.short_description = "زمان انتشار"
+    def jestimated_end(self):
+        return jalali_converter(self.estimated_end)
+
+    jestimated_end.short_description = "زمان پایان تخمینی"

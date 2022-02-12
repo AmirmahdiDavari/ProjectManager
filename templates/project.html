@@ -19,8 +19,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{% block title %}{% endblock %}</title>
-
+    <title>لیست تسک کارشناس</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
     <meta name="author" content="Themesberg">
@@ -51,14 +50,14 @@
           content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120"
-          href="{% static 'admin_volt/assets/img/favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32"
-          href="{% static 'admin_volt/assets/img/favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16"
-          href="{% static 'admin_volt/assets/img/favicon/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'admin_volt/assets/img/favicon/site.webmanifest' %}">
-    <link rel="mask-icon" href="{% static 'admin_volt/assets/img/favicon/safari-pinned-tab.svg' %}" color="#ffffff">
+<!--    <link rel="apple-touch-icon" sizes="120x120"-->
+<!--          href="{% static 'admin_volt/assets/img/favicon/apple-touch-icon.png' %}">-->
+<!--    <link rel="icon" type="image/png" sizes="32x32"-->
+<!--          href="{% static 'admin_volt/assets/img/favicon/favicon-32x32.png' %}">-->
+<!--    <link rel="icon" type="image/png" sizes="16x16"-->
+<!--          href="{% static 'admin_volt/assets/img/favicon/favicon-16x16.png' %}">-->
+<!--    <link rel="manifest" href="{% static 'admin_volt/assets/img/favicon/site.webmanifest' %}">-->
+<!--    <link rel="mask-icon" href="{% static 'admin_volt/assets/img/favicon/safari-pinned-tab.svg' %}" color="#ffffff">-->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
@@ -135,38 +134,13 @@
                 <a href="">{{project.title}}</a>
             </div>
             <div class="col-8 my-1">
-                <a  href="{% url 'Task:Task_project' %}" class="btn btn-danger btn- mx-5">تسک ها</a>
+                <a  href="{% url 'Task:task_detile' %}?projectId={{project.id}}" class="btn btn-danger btn- mx-5">تسک ها</a>
             </div>
 
             {% endfor %}
         </div>
 
 
-        {% comment %}
-        <div class="row">
-            <div class="col-12 col-md-4 col-xl-6 mb-4 mb-md-0">
-                <p class="mb-0 text-center text-lg-start">
-                    &copy; <a class="text-primary fw-normal" href="https://themesberg.com"
-                              target="_blank">Themesberg</a>
-                    - Coded by <a href="https://appseed.us" target="_blank">AppSeed</a>.
-                </p>
-            </div>
-            <div class="col-12 col-md-8 col-xl-6 text-center text-lg-start">
-                {% for project in object_list %}
-                <a href="">{{project.title}}</a>
-                <br>
-                {% endfor %}Q
-                <!-- List -->
-                <ul class="list-inline list-group-flush list-group-borderless text-md-end mb-0">
-                    <li class="list-inline-item px-0 px-sm-2">
-
-                        <a target="_blank"
-                           href="https://appseed.us/admin-dashboards/django-dashboard-volt">Django Volt Dashboard</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        {% endcomment %}
     </footer>
     <!-- End Footer -->
     {% endif %}

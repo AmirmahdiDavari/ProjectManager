@@ -1,9 +1,9 @@
-from django import forms
-from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
 from jalali_date.widgets import AdminJalaliDateWidget, AdminSplitJalaliDateTime
-
+from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
 from AddUser.admin import _
 from .models import Project
+from django import forms
+
 
 
 class TestForm(forms.ModelForm):

@@ -23,9 +23,7 @@ class ProjectAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     list_display = ('title', 'image_tag', 'creator', 'jcreateDate', 'jstartDate', 'status', 'category')
     exclude = ['creator']
     search_fields = ('title', 'description')
-
     actions_on_top = False
-    actions_selection_counter = True
     empty_value_display = 'وارد نشده ا ست '
 
     # project category
@@ -43,32 +41,31 @@ class ProjectAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
         obj.creator = request.user
         return super().save_model(request, obj, form, change)
 
-    # createDate
+    def sections(self, obj):
+        return format_html(
+            "<button><a class='btn primary-btn' href=/admin/Step/step/?projectId="
+            + str(obj.id) + ">بخش </a></button>", obj)
+
+    # convert date to jalali_date
     def jcreateDate(self, obj):
         return date2jalali(obj.createDate)
 
     jcreateDate.short_description = "تاریخ ایجاد"
 
-    # startDate
+    # convert date to jalali_date
     def jstartDate(self, obj):
         return date2jalali(obj.startDate)
 
     jstartDate.short_description = "تاریخ شروع"
 
-    def sections(self,obj):
-        return format_html(
-            "<button><a class='btn primary-btn' href=/admin/Step/step/?projectId="
-            + str(obj.id) + ">بخش </a></button>", obj)
-
 
 class SectionsAdmin(admin.ModelAdmin):
     list_display = ['name', 'pid', 'status']
-
     actions_on_top = False
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name','tasks']
+    list_display = ['name', 'tasks']
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if request.GET:
@@ -77,6 +74,7 @@ class CategoryAdmin(admin.ModelAdmin):
             if db_field.name == "section_id":
                 kwargs["queryset"] = Sections.objects.filter(projects__id=request)
                 return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    # set user creator
 
     def save_model(self, request, obj, form, change) -> None:
         if request.GET:
@@ -84,7 +82,6 @@ class CategoryAdmin(admin.ModelAdmin):
             request = request.split('=')[1]
             obj.project_id = Project.objects.get(id=request)
             return super().save_model(request, obj, form, change)
-
 
     def tasks(self, obj):
         return format_html(
@@ -94,9 +91,6 @@ class CategoryAdmin(admin.ModelAdmin):
         )
 
     tasks.short_description = 'تسک ها'
-
-
-
 
 
 admin.site.register(Project, ProjectAdmin)

@@ -46,9 +46,10 @@ class ProjectList(APIView):
     def get(self, request):
         status, message, data = False, "خطا در api", " "
         try:
-            projects = request.user.projects
-            projects = ProjectSerializer(projects, many=True).data
-            message, data, status = "پروژه ها با موفقیت بازگردانده شدند", projects, True
+            project=Project.objects.all()
+            # projects = request.user.projects
+            serializers = ProjectSerializer(project, many=True).data
+            message, data, status = "پروژه ها با موفقیت بازگردانده شدند", serializers, True
         except:
             message = "چنین پروژه ای یافت نشد"
         return response(status, message, data)
@@ -82,9 +83,7 @@ class list_project(ListView):
             return Project.objects.filter(experts=self.request.user)
 
 
-# def handler403(request, exception):
-#     data = {}
-#     return render(request, '403.html', data)
+
 
 def handler403(request, exception):
     return render(request, '403.html', status=403)
@@ -97,8 +96,3 @@ def handler500(request):
 def handler404(request, exception):
     return render(request, '404.html', status=404)
 
-#
-# def handler404(request, exception, template_name="404.html"):
-#     response = render_to_response(template_name)
-#     response.status_code = 404
-#     return response

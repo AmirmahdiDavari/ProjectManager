@@ -1,12 +1,4 @@
-    <!--<html>-->
-    <!--{% for project in object_list %}-->
 
-    <!--<a href="">{{project.title}}</a>-->
-    <!--<br>-->
-
-    <!--{% endfor %}-->
-
-    <!--</html>-->
     <!DOCTYPE html>
 
 {% load i18n static admin_volt %}
@@ -127,7 +119,7 @@
     <!-- Footer -->
     <footer class="bg-white rounded shadow p-5 mb-4 mt-4" dir="rtl">
         <div class="row" >
-
+            {% if object_list %}
             {% for project in object_list %}
             <div class="col-4 my-1">
 
@@ -138,6 +130,9 @@
             </div>
 
             {% endfor %}
+            {% else %}
+            <p>پروژه ای برای شما ثبت نشده است </p>
+            {% endif %}
         </div>
 
 

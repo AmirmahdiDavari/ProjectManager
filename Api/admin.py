@@ -1,8 +1,8 @@
-from django.contrib import admin
-from Task.models import Task
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
 from Api.models import Attach, Validation, Develop, Testing, Message
 from jalali_date import datetime2jalali, date2jalali
-from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
+from django.contrib import admin
+from Task.models import Task
 
 
 # ___________________________________________________Admin_Attach___________________________________________________

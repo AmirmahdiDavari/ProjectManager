@@ -31,4 +31,5 @@ class UpdateStatusTasktSerializer(serializers.ModelSerializer):
 class DashbordTasktSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ["Estimated_end", 'status']
+        # fields = ["estimated_end", 'status']
+        fields = "__all__"

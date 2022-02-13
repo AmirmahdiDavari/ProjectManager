@@ -1,16 +1,12 @@
+from jalali_date import datetime2jalali, date2jalali
+from extentions.Utils import jalali_converter
+from jalali_date import datetime2jalali
+from AddUser.models import MyUser
 from django.db import models
 from Task.models import Task
-from AddUser.models import MyUser
-from jalali_date import datetime2jalali, date2jalali
-from jalali_date import datetime2jalali
-
-from extentions.Utils import jalali_converter
 
 
-
-
-
-# Attach
+# Attach models
 class Attach(models.Model):
     STATUS = (
         (1, 'disable'),
@@ -34,14 +30,12 @@ class Attach(models.Model):
     def __str__(self):
         return self.name
 
-
-
     class Meta:
         verbose_name = "ضمیمه"
         verbose_name_plural = "فایلهای ضمیمه"
 
 
-# apiDevelop
+# apiDevelop models
 class Develop(models.Model):
     METHOD = (
         (1, 'get'),
@@ -56,7 +50,7 @@ class Develop(models.Model):
     url = models.CharField(max_length=200, verbose_name="آدرس ")
     param = models.CharField(max_length=200, verbose_name="پارامتر", null=True, blank=True)
     response = models.TextField(max_length=200, verbose_name="بازخورد", null=True, blank=True)
-    attach_ids = models.ManyToManyField(Attach, verbose_name="ضمیمه",null = True, blank=True)
+    attach_ids = models.ManyToManyField(Attach, verbose_name="ضمیمه", null=True, blank=True)
     doneDate = models.DateField(auto_now=True, verbose_name="تاریخ انجام شدن")
     createDate = models.DateField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     creator_uid = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, related_name="UserCreator",
@@ -64,18 +58,22 @@ class Develop(models.Model):
 
     def __str__(self):
         return self.name
+
+    # convert date to jalali_date
     def jdoneDate(self):
         return jalali_converter(self.doneDate)
+
+    # convert date to jalali_date
+
     def jcreateDate(self):
         return jalali_converter(self.createDate)
-
 
     class Meta:
         verbose_name = "توسعه "
         verbose_name_plural = "توسعه ها "
 
 
-# apiValidation
+# apiValidation models
 class Validation(models.Model):
     STATUS = (
         (1, 'disable'),
@@ -84,7 +82,7 @@ class Validation(models.Model):
     title = models.CharField(max_length=200, verbose_name="عنوان ")
     task_id = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True, verbose_name="نام تسک")
     description = models.TextField(max_length=5000, verbose_name="توضیحات")
-    status = models.IntegerField(choices=sorted(STATUS), verbose_name="وضعیت",default = 2 , editable=False)
+    status = models.IntegerField(choices=sorted(STATUS), verbose_name="وضعیت", default=2, editable=False)
     doneDate = models.DateField(auto_now=True, verbose_name="تاریخ انجام ")
     creator_id = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, verbose_name="نام ایجاد کننده")
     createDate = models.DateField(auto_now_add=True, null=True, verbose_name="تاریخ ایجاد  ")
@@ -92,8 +90,12 @@ class Validation(models.Model):
     def __str__(self):
         return self.title
 
+    # convert date to jalali_date
+
     def jdoneDate(self):
         return jalali_converter(self.doneDate)
+
+    # convert date to jalali_date
 
     def jcreateDate(self):
         return jalali_converter(self.createDate)
@@ -103,7 +105,7 @@ class Validation(models.Model):
         verbose_name_plural = "اعتبار سنجی ها"
 
 
-# apiMessage
+# apiMessage models
 class Message(models.Model):
     STATUS = (
         (1, 'disable'),
@@ -113,7 +115,7 @@ class Message(models.Model):
 
     title = models.CharField(max_length=200, verbose_name="عنوان ")
     code = models.CharField(max_length=5000, verbose_name="کد")
-    status = models.IntegerField(choices=sorted(STATUS), verbose_name="وضعیت", default = 2 , editable=False)
+    status = models.IntegerField(choices=sorted(STATUS), verbose_name="وضعیت", default=2, editable=False)
     doneDate = models.DateField(auto_now=True, verbose_name="تاریخ انجام ")
     creator_id = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, verbose_name="نام ایجاد کننده")
     createDate = models.DateField(auto_now_add=True, null=True, verbose_name="تاریخ ایجاد  ")
@@ -124,8 +126,12 @@ class Message(models.Model):
     def my_view(request):
         jalali_join = datetime2jalali(request.user.date_joined).strftime('%y/%m/%d _ %H:%M:%S')
 
+    # convert date to jalali_date
+
     def jdoneDate(self):
         return jalali_converter(self.doneDate)
+
+    # convert date to jalali_date
 
     def jcreateDate(self):
         return jalali_converter(self.createDate)
@@ -135,7 +141,7 @@ class Message(models.Model):
         verbose_name_plural = "پیغام ها"
 
 
-# apiTesting
+# apiTesting models
 class Testing(models.Model):
     STATUS = (
         (1, 'disable'),

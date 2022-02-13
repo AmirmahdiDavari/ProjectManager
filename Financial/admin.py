@@ -1,16 +1,15 @@
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
+from jalali_date import datetime2jalali, date2jalali
+from django.contrib import admin
 from .models import financial
 
-from django.contrib import admin
-from jalali_date import datetime2jalali, date2jalali
-from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
-
-
-class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
-    model = financial
-
-
-class MyInlines2(StackedInlineJalaliMixin, admin.StackedInline):
-    model = financial
+#
+# class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
+#     model = financial
+#
+#
+# class MyInlines2(StackedInlineJalaliMixin, admin.StackedInline):
+#     model = financial
 
 
 class JSONEditor:
@@ -18,10 +17,10 @@ class JSONEditor:
 
 
 class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
-    list_display = ('title', 'Description', 'jstartDate', 'type','project_id')
-    # list_filter = ['title']
+    list_display = ('title', 'Description', 'jstartDate', 'type', 'project_id')
     search_fields = ('title', 'Description')
     exclude = ['creator_financial']
+    actions_on_top = False
 
     def get_created_jalali(self, obj):
         return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')

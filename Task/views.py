@@ -135,7 +135,7 @@ class task_detile(ListView):
 
     def get_queryset(self):
         request = self.request.GET
-
+        print(request)
         if self.request.method == 'GET':
             if self.request.user.is_superuser:
                 request=request['projectId']

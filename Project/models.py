@@ -38,9 +38,9 @@ class Project(models.Model):
     createDate = models.DateField(auto_now_add=True)
     description = models.TextField(null=False, verbose_name="توضیحات")
     image = models.ImageField(upload_to='project/images', null=True, verbose_name="عکس")
-    experts = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 1}, related_name="projects",
+    experts = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 2}, related_name="projects",
                                      verbose_name="کارشناس ها")
-    scrumMaster = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 2},
+    scrumMaster = models.ManyToManyField(AUTH_USER_MODEL, limit_choices_to={'groups__id': 1},
                                          related_name="scrumasterProjects", verbose_name="اسکرام مستر")
     startDate = models.DateField(verbose_name="زمان شروع")
     endDate = models.DateField(verbose_name="زمان پایان")

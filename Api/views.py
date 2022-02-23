@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from Api.models import Message , Develop , Validation
 from Task.models import  Task
 from rest_framework.permissions import IsAuthenticated
-from Project.models import Project
+from Project.models import Project , Category
 
 # Create your views here.
 # class api_mg(ListView):
@@ -23,7 +23,9 @@ def api_mg(request):
     validation = Validation.objects.filter(task_id__id=requestobj)
     develop = Develop.objects.filter(task_id__id=requestobj)
     project=Project.objects.all()
-    return render(request , 'Api.html',context={'mes':message,'val':validation,'dev':develop,'pro':project})
+    ids=project.values_list('pk',flat=True)
+    print(ids)
+    return render(request , 'Api.html',context={'mes':message,'val':validation,'dev':develop,'pro':ids})
 
 
 

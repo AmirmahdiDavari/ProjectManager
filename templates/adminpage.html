@@ -1,4 +1,6 @@
 {% extends 'admin/base-fullscreen.html' %}
+{% load static %}
+
 {% load i18n static admin_volt %}
 
 {% block title %} Sign IN {% endblock %}
@@ -27,35 +29,5 @@
         </section>
     </main>
 
+<script src="static/admin_volt/assets/js/t.js"></script>
 {% endblock content %}
-
-<!--{% block extrascript %}-->
-<!--&lt;!&ndash;    <script type="application/javascript">&ndash;&gt;-->
-<!--&lt;!&ndash;        {% if form.username.errors %}&ndash;&gt;-->
-<!--&lt;!&ndash;            notification.danger("{{ form.username.errors }}", 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;        {% endif %}&ndash;&gt;-->
-<!--&lt;!&ndash;        {% if form.password.errors %}&ndash;&gt;-->
-<!--&lt;!&ndash;            notification.danger("{{ form.password.errors }}", 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;        {% endif %}&ndash;&gt;-->
-
-<!--&lt;!&ndash;        {% if user.is_authenticated %}&ndash;&gt;-->
-<!--&lt;!&ndash;            var msg = "You are authenticated as {{ username }}, but are not authorized to " +&ndash;&gt;-->
-<!--&lt;!&ndash;                "access this page.Would you like to login to a different account ?"&ndash;&gt;-->
-<!--&lt;!&ndash;            notification.warning(msg, 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;        {% endif %}&ndash;&gt;-->
-
-<!--&lt;!&ndash;        {% if form.errors and not form.non_field_errors %}&ndash;&gt;-->
-<!--&lt;!&ndash;            {% if form.errors.items|length == 1 %}&ndash;&gt;-->
-<!--&lt;!&ndash;                notification.warning("{% trans "Please correct the error below." %}", 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;            {% else %}&ndash;&gt;-->
-<!--&lt;!&ndash;                notification.warning("{% trans "Please correct the errors below." %}", 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;            {% endif %}&ndash;&gt;-->
-<!--&lt;!&ndash;        {% endif %}&ndash;&gt;-->
-
-<!--&lt;!&ndash;        {% if form.non_field_errors %}&ndash;&gt;-->
-<!--&lt;!&ndash;            {% for error in form.non_field_errors %}&ndash;&gt;-->
-<!--&lt;!&ndash;                notification.warning("{{ error|clean_text }}", 'top', 'right');&ndash;&gt;-->
-<!--&lt;!&ndash;            {% endfor %}&ndash;&gt;-->
-<!--&lt;!&ndash;        {% endif %}&ndash;&gt;-->
-<!--&lt;!&ndash;    </script>&ndash;&gt;-->
-<!--{% endblock %}-->

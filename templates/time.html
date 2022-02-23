@@ -84,11 +84,9 @@
     <!-- Sidebar -->
     {% block sidebar %}{% endblock %}
     <!-- End Sidebar -->
-    {% for project in pro %}
     <div style="text-align: end;">
-        <a href="{% url 'Task:task_detile' %}?projectId={{project.id}}" class="btn btn-danger btn- ">بازگشت</a>
+        <a href="{% url 'project:list_project' %}" class="btn btn-danger btn- ">بازگشت</a>
     </div>
-    {% endfor %}
 
 
 

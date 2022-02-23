@@ -130,7 +130,6 @@
 
         <div class="row">
 
-
             <a class="btn btn-danger">لیست تسک های زمان دهی شده </a>
             {% for Task in object_list %}
             {% if Task.estimated_end != null %}
@@ -153,6 +152,7 @@
                 {% endif%}
                 <br>
                 <br>
+
             </div>
             {% endif %}
            {% endfor %}

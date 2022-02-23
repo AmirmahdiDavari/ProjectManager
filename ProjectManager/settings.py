@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-rf9ap3jwpvr4vl&bvn91*1!=i1uxla_!5msyi&fi%4d%=$(jq!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# ALLOWED_HOSTS = ['project.webts.ir','185.226.119.202']
+ALLOWED_HOSTS = ['185.226.119.202','185.226.119.202', '127.0.0.1','project.webts.ir']
 
-ALLOWED_HOSTS = ['192.168.1.56','185.226.119.202', '127.0.0.1']
 
 # Application definition
 
@@ -111,6 +112,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ProjectManager.wsgi.application'
 
+
+# CSRF_COOKIE_SECURE=True
+# SECURE_SSL_REDIRECT =True
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -175,8 +179,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    BASE_DIR / "media"
-    ]
+    '/var/www/static/',
+]
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -195,3 +200,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKEN": True,
 }
+
+
+# SECURE_SSL_REDIRECT = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
